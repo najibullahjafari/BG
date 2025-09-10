@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: #000;
+  color: #fff;
+}
+
+/* Global aurora / noise / vignette layers (assuming existing classes or to be appended globally) */
+:root {
+  --noise-opacity: 0.08;
+}
+
+/* Muted theme overrides */
+.theme-muted .text-gradient {
+  background: linear-gradient(to right, #e9d5ff, #faf5ff, #e9d5ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.theme-muted .muted-fade {
+  opacity: 0.8;
+}
+
+/* Section hover-only divider: wrapper must have class section-block */
+.section-block {
+  position: relative;
+}
+.section-block + .section-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 85, 247, 0.35),
+    transparent
+  );
+  opacity: 0;
+  transform: scaleX(0.85);
+  transition: opacity 0.5s ease,
+    transform 0.6s cubic-bezier(0.65, 0.05, 0.36, 1);
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.4));
+}
+.section-block:hover::before,
+.section-block:focus-within::before {
+  opacity: 0.75;
+  transform: scaleX(1);
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Utility fallbacks */
+@layer utilities {
+  .text-glow-soft {
+    text-shadow: 0 0 8px rgba(168, 85, 247, 0.5),
+      0 0 18px rgba(192, 132, 252, 0.25);
+  }
+  .bg-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .gradient-fade-x {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0),
+      rgba(255, 255, 255, 0.06),
+      rgba(0, 0, 0, 0)
+    );
+  }
+}
