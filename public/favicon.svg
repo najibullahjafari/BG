@@ -1,0 +1,21 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'>
+  <defs>
+    <radialGradient id='g' cx='50%' cy='45%' r='70%'>
+      <stop offset='0%' stop-color='#e879f9'/>
+      <stop offset='40%' stop-color='#8b5cf6'/>
+      <stop offset='100%' stop-color='#1e1b4b'/>
+    </radialGradient>
+    <filter id='glow' x='-50%' y='-50%' width='200%' height='200%'>
+      <feGaussianBlur stdDeviation='8' result='b'/>
+      <feMerge>
+        <feMergeNode in='b'/>
+        <feMergeNode in='SourceGraphic'/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width='256' height='256' rx='42' fill='url(#g)'/>
+  <circle cx='128' cy='128' r='96' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='4'/>
+  <circle cx='128' cy='128' r='70' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='3'/>
+  <text x='50%' y='54%' text-anchor='middle' font-family='Segoe UI,Inter,Arial,sans-serif' font-size='96' font-weight='700' fill='#fff' filter='url(#glow)'>N</text>
+  <text x='50%' y='74%' text-anchor='middle' font-family='Segoe UI,Inter,Arial,sans-serif' font-size='46' font-weight='600' fill='#f0abfc' letter-spacing='4' style='filter:url(#glow)'>J</text>
+</svg>
