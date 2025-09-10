@@ -1,4 +1,15 @@
 // src/data/resume.js
+// Import project images so Vite processes & fingerprints them correctly.
+// Direct "/src/..." string paths were not bundled, causing 404s on GitHub Pages.
+import kankorImg from "../assets/projects/dormitory/kankor.jpg";
+import apartmentImg from "../assets/projects/apartment/apartment.PNG";
+import tourismImg from "../assets/projects/atp/tourism.jpeg";
+import afgmapImg from "../assets/projects/awec/afgmap.PNG";
+import attendanceDeviceImg from "../assets/projects/awec/attendance_device.PNG";
+import attendanceImg from "../assets/projects/awec/attendance.PNG";
+import logImg from "../assets/projects/awec/log.PNG";
+import messengerImg from "../assets/projects/awec/messenger.PNG";
+
 export const resume = {
     name: "Najibullah Jafari",
     title: "Full-stack web developer",
@@ -51,27 +62,21 @@ export const resume = {
             description: "Intuitive HMS system for automating Kankor student dormitory selection. Full dashboard for faculties and departments.",
             tech: ["Laravel Livewire", "GitHub", "Agile", "Bootstrap5", "Remote Collaboration", "Team working"],
             period: "04/2021 – 02/2024",
-            images: [
-                "/src/assets/projects/dormitory/kankor.jpg"
-            ]
+            images: [kankorImg]
         },
         {
             name: "Apartment Rental System",
             description: "Intuitive HMS system for automating apartment rental processes. Full dashboard for landlords and tenants.",
             tech: ["Laravel Livewire", "GitHub", "Agile", "Bootstrap5", "one site Collaboration", "Team working"],
             period: "04/2025 – 07/2026",
-            images: [
-                "/src/assets/projects/apartment/apartment.PNG"
-            ]
+            images: [apartmentImg]
         },
         {
             name: "Afghanistan Tourism Portal",
             description: "A comprehensive platform for sightseeing places, car/hotel booking for tourists. Full dashboard for hotels, cars, tourists, admin.",
             tech: ["React js", "Inertia js", "Laravel", "GitHub", "Agile", "Tailwind css", "Remote Collaboration", "Team working"],
             period: "04/2021 – 02/2024",
-            images: [
-                "/src/assets/projects/atp/tourism.jpeg"
-            ]
+            images: [tourismImg]
         },
         {
             name: "Afghanistan Women Educational Center ERP",
@@ -79,11 +84,11 @@ export const resume = {
             tech: ["Laravel", "Livewire", "GitHub", "Agile", "Tailwind CSS", "Cpanel & deployment", "On site collaboration", "Team working", "MySQL", "HeidiSQL", "PhpMyAdmin"],
             period: "04/2025 – Present",
             images: [
-                "/src/assets/projects/awec/afgmap.PNG",
-                "/src/assets/projects/awec/attendance_device.PNG",
-                "/src/assets/projects/awec/attendance.PNG",
-                "/src/assets/projects/awec/log.PNG",
-                "/src/assets/projects/awec/messenger.PNG",
+                afgmapImg,
+                attendanceDeviceImg,
+                attendanceImg,
+                logImg,
+                messengerImg,
             ]
         }
     ],
