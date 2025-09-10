@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://najibullahjafari.github.io/BG/sitemap.xml
