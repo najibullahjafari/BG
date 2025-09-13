@@ -1,6 +1,4 @@
-// src/data/resume.js
-// Import project images so Vite processes & fingerprints them correctly.
-// Direct "/src/..." string paths were not bundled, causing 404s on GitHub Pages.
+
 import kankorImg from "../assets/projects/dormitory/kankor.jpg";
 import apartmentImg from "../assets/projects/apartment/apartment.PNG";
 import tourismImg from "../assets/projects/atp/tourism.jpeg";
@@ -9,6 +7,7 @@ import attendanceDeviceImg from "../assets/projects/awec/attendance_device.PNG";
 import attendanceImg from "../assets/projects/awec/attendance.PNG";
 import logImg from "../assets/projects/awec/log.PNG";
 import messengerImg from "../assets/projects/awec/messenger.PNG";
+import { stack } from "three/tsl";
 
 export const resume = {
     name: "Najibullah Jafari",
@@ -16,8 +15,12 @@ export const resume = {
     email: "najib2020202020@gmail.com",
     github: "https://github.com/najibullahjafari",
     linkedin: "https://linkedin.com/in/najibullahjafari",
-    twitter: "https://twitter.com/yourhandle",
-    portfolio: "https://yourportfolio.com",
+    twitter: "https://x.com/Najib_Jafari_",
+    portfolio: "https://najibullahjafari.github.io/BG",
+    stackOverflow: "https://stackoverflow.com/users/22340696/najibullah-jafari",
+    CodeForces: "https://codeforces.com/profile/kucoders",
+    LeetCode: "https://leetcode.com/u/najib2020202020/",
+    Phone: "0793647446",
     summary: `Certified Full-stack web developer skilled in crafting innovative programs for organizational efficiency. Proficient in technology, specializing in Laravel and React for reliable and user-friendly systems. Proven mentor, adept at motivating and managing a team of 5+ developers for efficient software development. Confident communicator and strategic thinker, excelling in creating tailored solutions that emphasize core competencies and drive overall success.`,
     skills: {
         frontend: ["JavaScript", "React", "Redux", "Tailwind", "HTML5", "CSS3", "Bootstrap", "Vue js"],
