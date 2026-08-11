@@ -104,6 +104,9 @@ export default function Projects() {
                 <img
                   src={lightbox.project.images[lightbox.imageIndex]}
                   alt={lightbox.project.name + " enlarged screenshot"}
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
                   className="w-full h-auto max-h-[75vh] object-contain select-none"
                   draggable={false}
                 />
@@ -199,7 +202,7 @@ function ProjectCard({ project, index, onOpenLightbox }) {
   return (
     <Reveal delay={index * 0.05} className="h-full">
       <article className="card card-hover flex h-full flex-col overflow-hidden">
-        <div className="relative border-b border-white/10">
+        <div className="relative border-b border-white/10 bg-surface-raised">
           {hasImages ? (
             <button
               type="button"
@@ -212,8 +215,9 @@ function ProjectCard({ project, index, onOpenLightbox }) {
                   key={project.images[activeIndex]}
                   src={project.images[activeIndex]}
                   alt={`${project.name} — screenshot ${activeIndex + 1} of ${project.images.length}`}
-                  loading="lazy"
+                  loading={index === 0 ? "eager" : "lazy"}
                   decoding="async"
+                  fetchpriority={index === 0 ? "high" : "low"}
                   initial={reduced ? false : { opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={reduced ? undefined : { opacity: 0 }}
