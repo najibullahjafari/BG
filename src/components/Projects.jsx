@@ -187,9 +187,12 @@ export default function Projects() {
 function ProjectCard({ project, index, onOpenLightbox }) {
   const reduced = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const multi = project.images.length > 1;
-  const next = () => setActiveIndex((i) => (i + 1) % project.images.length);
+  const hasImages = project.images.length > 0;
+  const multi = hasImages && project.images.length > 1;
+  const next = () =>
+    hasImages && setActiveIndex((i) => (i + 1) % project.images.length);
   const prev = () =>
+    hasImages &&
     setActiveIndex(
       (i) => (i - 1 + project.images.length) % project.images.length,
     );
@@ -197,28 +200,34 @@ function ProjectCard({ project, index, onOpenLightbox }) {
     <Reveal delay={index * 0.05} className="h-full">
       <article className="card card-hover flex h-full flex-col overflow-hidden">
         <div className="relative border-b border-white/10">
-          <button
-            type="button"
-            onClick={() => onOpenLightbox(activeIndex)}
-            className="block aspect-[16/10] w-full cursor-zoom-in overflow-hidden"
-            aria-label={`Open enlarged screenshots of ${project.name}`}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.img
-                key={project.images[activeIndex]}
-                src={project.images[activeIndex]}
-                alt={`${project.name} — screenshot ${activeIndex + 1} of ${project.images.length}`}
-                loading="lazy"
-                decoding="async"
-                initial={reduced ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={reduced ? undefined : { opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="h-full w-full object-cover object-top"
-                draggable={false}
-              />
-            </AnimatePresence>
-          </button>
+          {hasImages ? (
+            <button
+              type="button"
+              onClick={() => onOpenLightbox(activeIndex)}
+              className="block aspect-[16/10] w-full cursor-zoom-in overflow-hidden"
+              aria-label={`Open enlarged screenshots of ${project.name}`}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={project.images[activeIndex]}
+                  src={project.images[activeIndex]}
+                  alt={`${project.name} — screenshot ${activeIndex + 1} of ${project.images.length}`}
+                  loading="lazy"
+                  decoding="async"
+                  initial={reduced ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduced ? undefined : { opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="h-full w-full object-cover object-top"
+                  draggable={false}
+                />
+              </AnimatePresence>
+            </button>
+          ) : (
+            <div className="flex aspect-[16/10] w-full items-center justify-center bg-white/[0.04]">
+              <p className="text-sm text-zinc-500">Screenshot coming soon</p>
+            </div>
+          )}
           {multi && (
             <>
               <button
@@ -269,9 +278,11 @@ function ProjectCard({ project, index, onOpenLightbox }) {
               {project.problem}
             </p>
           )}
-          <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-            {project.description}
-          </p>
+          {project.description && (
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+              {project.description}
+            </p>
+          )}
           {project.highlights && (
             <ul className="mt-3 space-y-1.5">
               {project.highlights.map((h) => (

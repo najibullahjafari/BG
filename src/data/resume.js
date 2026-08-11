@@ -81,7 +81,7 @@ export const resume = {
         {
             company: "Apex Games",
             role: "Web Developer",
-            period: "08/2024-Present",
+            period: "08/2024-08/2025",
             description: "Part-time remote developer on a globally distributed team: building React + Tailwind interfaces and Ruby features, coordinating asynchronously via GitHub and Discord.",
             tech: ["React", "Tailwind CSS", "Ruby", "Figma"],
             location: "Remote"
@@ -89,13 +89,48 @@ export const resume = {
         {
             company: "Kabul Innovation Center",
             role: "Full-stack Engineer",
-            period: "02/2025-Present",
+            period: "02/2025-04/2025",
             description: "Full-stack engineer on HMS and MIS web applications: building modules with Laravel and Livewire, automating workflows, and handling deployment via cPanel.",
             tech: ["Laravel", "Livewire", "Tailwind CSS", "cPanel"],
             location: "On-site"
+        },
+        {
+            company: "SJA Pathway",
+            role: "Senior Web Developer",
+            period: "05/2025-Present",
+            description: "Part-time senior developer: reviewing pull requests, leading the team, creating tasks and driving delivery in a remote workflow.",
+            tech: ["React", "Laravel", "GitHub"],
+            location: "Remote"
         }
     ],
     projects: [
+        {
+            name: "Azoqa",
+            role: "Full-stack Developer",
+            problem: "Placeholder — detailed case study will be added when screenshots are ready.",
+            description: "Custom web application for azoqa.com. Details, stack, and screenshots are being finalized.",
+            tech: ["React", "Laravel"],
+            period: "2025",
+            images: []
+        },
+        {
+            name: "NUI Academy",
+            role: "Full-stack Developer",
+            problem: "Placeholder — detailed case study will be added when screenshots are ready.",
+            description: "Custom web application for nui.academy. Details, stack, and screenshots are being finalized.",
+            tech: ["React", "Laravel"],
+            period: "2025",
+            images: []
+        },
+        {
+            name: "ZEROO POS",
+            role: "Full-stack Developer",
+            problem: "Placeholder — detailed case study will be added when screenshots are ready.",
+            description: "Custom point-of-sale system for ZEROO. Details, stack, and screenshots are being finalized.",
+            tech: ["React", "Laravel"],
+            period: "2025",
+            images: []
+        },
         {
             name: "Afghanistan Women Educational Center ERP",
             role: "Full-stack Engineer",
@@ -183,19 +218,9 @@ export const resume = {
             description: "BSc Computer Science (Information Systems). Coursework: full-stack web development, databases, HCI, BPMN, Flutter, networking, system administration. GPA 3.5."
         },
         {
-            institution: "University of People",
-            period: "10/2025 – present",
-            description: "BSc Computer Science (in progress). Coursework: data structures and algorithms, operating systems, database systems, software engineering."
-        },
-        {
             institution: "Microverse",
             period: "04/2023 – 08/2024",
             description: "Full-time remote software development program: 1300+ hours of algorithms, data structures, and full-stack projects with JavaScript, React, Redux, and Ruby on Rails — using remote pair programming, git-flow, and daily standups."
-        },
-        {
-            institution: "edX",
-            period: "08/2025 – Present",
-            description: "Professional Certificate in Computer Science for Artificial Intelligence (in progress): Python, SQL, data structures, algorithms, and machine learning."
         },
     ]
 };
