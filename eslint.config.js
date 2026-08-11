@@ -23,7 +23,9 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // `motion` is used via JSX member expressions (<motion.div>), which
+      // no-unused-vars cannot detect without eslint-plugin-react.
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]|^motion$' }],
     },
   },
 ])

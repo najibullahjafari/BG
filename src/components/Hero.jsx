@@ -1,85 +1,93 @@
 // src/components/Hero.jsx
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import MagicParticles from "./MagicParticles";
-import LangAvatars from "./LangAvatars";
-const __motionHeroRef = motion; // linter workaround if needed
+import { motion, useReducedMotion } from "framer-motion";
+import { resume } from "../data/resume";
+import SocialLinks from "./SocialLinks";
+
+const coreStack = [
+  "React",
+  "Laravel",
+  "TypeScript",
+  "Python",
+  "PostgreSQL",
+  "MySQL",
+];
 
 export default function Hero() {
-  const ref = useRef(null);
-  // Observe scroll over the hero viewport height
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const prefersReduced =
-    typeof window !== "undefined" &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // Horizontal slide (0 -> 35% scroll)
-  const x = useTransform(
-    scrollYProgress,
-    [0, 0.35, 1],
-    prefersReduced ? [0, 0, 0] : [0, 420, 420]
-  );
-  // After horizontal completes begin downward drift (35% -> 80%)
-  const y = useTransform(
-    scrollYProgress,
-    [0, 0.35, 0.8, 1],
-    prefersReduced ? [0, 0, 0, 0] : [0, 0, 280, 320]
-  );
-  // Fade out near end
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.7, 0.9, 1],
-    prefersReduced ? [1, 1, 1, 1] : [1, 1, 0.3, 0]
-  );
-  const filter = useTransform(
-    scrollYProgress,
-    [0, 0.8, 1],
-    prefersReduced
-      ? ["blur(0px)", "blur(0px)", "blur(0px)"]
-      : ["blur(0px)", "blur(0px)", "blur(6px)"]
-  ); // replaces blur.to
+  const reduced = useReducedMotion();
+  const enter = (delay = 0) =>
+    reduced
+      ? {}
+      : {
+          initial: { opacity: 0, y: 14 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.5, delay, ease: "easeOut" },
+        };
 
   return (
     <section
-      ref={ref}
-      className="relative flex flex-col items-center justify-center h-screen text-center overflow-hidden"
+      aria-label="Introduction"
+      className="relative flex min-h-[92vh] items-center overflow-hidden pt-16"
     >
-      <MagicParticles />
-      <motion.div
-        style={{ x, y, opacity, filter }}
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="flex flex-col items-center max-w-3xl px-6"
-      >
-        <motion.h1 className="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg mb-6">
-          Najibullah Jafari
-        </motion.h1>
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="text-2xl md:text-3xl font-semibold text-purple-300 mb-8"
-        >
-          Full-stack Web Developer
-        </motion.h2>
-        <LangAvatars />
+      {/* Subtle, static background texture — no JS animation cost */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(124,58,237,0.14),transparent)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]"
+      />
+      <div className="container-site relative py-20">
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-4 text-lg text-purple-100/90 leading-relaxed max-w-2xl"
+          {...enter(0)}
+          className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-300"
         >
-          Certified Full-stack web developer skilled in crafting innovative
-          programs for organizational efficiency. Specializing in Laravel and
-          React for reliable and user-friendly systems.
+          <span
+            className="h-2 w-2 rounded-full bg-emerald-400"
+            aria-hidden="true"
+          />
+          {resume.availability}
         </motion.p>
-      </motion.div>
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs tracking-widest text-purple-300/70 animate-pulse">
-        SCROLL
+        <motion.h1
+          {...enter(0.05)}
+          className="max-w-3xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+        >
+          {resume.name}
+          <span className="mt-3 block text-2xl font-semibold text-accent-300 sm:text-3xl">
+            {resume.title}
+          </span>
+        </motion.h1>
+        <motion.p
+          {...enter(0.1)}
+          className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400"
+        >
+          {resume.tagline}
+        </motion.p>
+        <motion.ul
+          {...enter(0.15)}
+          className="mt-6 flex flex-wrap gap-2"
+          aria-label="Core technologies"
+        >
+          {coreStack.map((t) => (
+            <li key={t} className="badge font-mono">
+              {t}
+            </li>
+          ))}
+        </motion.ul>
+        <motion.div
+          {...enter(0.2)}
+          className="mt-9 flex flex-wrap items-center gap-3"
+        >
+          <a href="#projects" className="btn-primary">
+            View my work
+          </a>
+          <a href="#contact" className="btn-secondary">
+            Start a conversation
+          </a>
+        </motion.div>
+        <motion.div {...enter(0.25)} className="mt-9">
+          <SocialLinks compact />
+        </motion.div>
       </div>
     </section>
   );

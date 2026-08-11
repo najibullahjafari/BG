@@ -4,46 +4,29 @@ export default {
         './index.html',
         './src/**/*.{js,jsx,ts,tsx}',
     ],
-    safelist: [
-        'bg-purple-900', 'via-indigo-900', 'to-blue-900', 'from-blue-900', 'from-pink-900', 'from-gray-900', 'via-indigo-950', 'to-black',
-        'border-purple-400', 'hover:border-pink-400', 'text-purple-300', 'bg-white/10', 'backdrop-blur-md', 'backdrop-blur-xl'
-    ],
     darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
-                display: ['Inter', 'ui-sans-serif', 'system-ui'],
-            },
-            boxShadow: {
-                glow: '0 0 20px rgba(167,139,250,0.5)',
-            },
-            keyframes: {
-                'spin-slow': { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } },
-                float: { '0%,100%': { transform: 'translateY(-6px)' }, '50%': { transform: 'translateY(6px)' } },
-                'gradient-x': { '0%,100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
-                aurora: {
-                    '0%': { backgroundPosition: '0% 50%' },
-                    '50%': { backgroundPosition: '100% 50%' },
-                    '100%': { backgroundPosition: '0% 50%' }
-                },
-                noise: {
-                    '0%': { transform: 'translate3d(0,0,0)' },
-                    '100%': { transform: 'translate3d(-100%,0,0)' }
-                }
-            },
-            animation: {
-                'spin-slow': 'spin-slow 6s linear infinite',
-                float: 'float 5s ease-in-out infinite',
-                'gradient-x': 'gradient-x 8s ease infinite',
-                'aurora-slow': 'aurora 22s ease-in-out infinite',
-                'noise-move': 'noise 3s linear infinite'
-            },
-            backgroundSize: {
-                '200%': '200% 200%',
+                display: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
             },
             colors: {
-                brand: { purple: '#6d28d9', pink: '#f472b6' }
-            }
+                surface: {
+                    DEFAULT: '#0a0a0f',
+                    raised: '#111118',
+                },
+                accent: {
+                    200: '#ddd6fe',
+                    300: '#c4b5fd',
+                    400: '#a78bfa',
+                    500: '#8b5cf6',
+                    600: '#7c3aed',
+                },
+            },
+            maxWidth: {
+                content: '72rem',
+            },
         }
     },
     plugins: []

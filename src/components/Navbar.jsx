@@ -1,75 +1,36 @@
 // src/components/Navbar.jsx
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const links = [
-  { name: "Home", href: "#hero" },
+  { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
   { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
   { name: "Websites", href: "#websites" },
   { name: "Education", href: "#education" },
   { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
-  const [active, setActive] = useState(0);
+  const [activeId, setActiveId] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [muted, setMuted] = useState(false); // when true: reduced glow / muted theme
-  const lastY = useRef(0);
 
-  // Restore saved active section
   useEffect(() => {
-    const saved = localStorage.getItem("last-active-section");
-    if (saved) {
-      const idx = links.findIndex((l) => l.href === saved);
-      if (idx !== -1) setActive(idx);
-    }
-  }, []);
-
-  // Persist active section
-  useEffect(() => {
-    localStorage.setItem("last-active-section", links[active].href);
-  }, [active]);
-
-  // Initialize muted from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("glow-muted");
-    if (saved === "1") setMuted(true);
-  }, []);
-
-  // Persist muted preference & root class toggle
-  useEffect(() => {
-    localStorage.setItem("glow-muted", muted ? "1" : "0");
-    const root = document.documentElement;
-    if (muted) root.classList.add("theme-muted");
-    else root.classList.remove("theme-muted");
-  }, [muted]);
-
-  // Scroll state (only shrink background, header always visible now)
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 20);
-      lastY.current = y;
-    };
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll spy with adjusted threshold
+  // Scroll spy
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const idx = links.findIndex((l) => l.href === `#${e.target.id}`);
-            if (idx !== -1) setActive(idx);
-          }
+          if (e.isIntersecting) setActiveId(`#${e.target.id}`);
         });
       },
-      { threshold: 0.32 }
+      { rootMargin: "-40% 0px -55% 0px" },
     );
     links.forEach((l) => {
       const el = document.querySelector(l.href);
@@ -78,76 +39,35 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Auto close menu on hash change
+  // Close the mobile menu on Escape
   useEffect(() => {
-    const handler = () => setMenuOpen(false);
-    window.addEventListener("hashchange", handler);
-    return () => window.removeEventListener("hashchange", handler);
-  }, []);
+    if (!menuOpen) return;
+    const handler = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [menuOpen]);
 
   const NavLinks = ({ vertical = false, onClick }) => (
     <ul
-      className={`flex ${
-        vertical ? "flex-col mt-3" : "flex-row"
-      } items-center gap-2`}
+      className={`flex items-center gap-1 ${vertical ? "flex-col items-stretch" : ""}`}
     >
-      {links.map((link, idx) => {
-        const isActive = active === idx;
+      {links.map((link) => {
+        const isActive = activeId === link.href;
         return (
-          <li key={link.name} className="relative group">
+          <li key={link.name}>
             <a
               href={link.href}
-              onClick={() => {
-                setActive(idx);
-                onClick && onClick();
-              }}
-              className={`relative block px-5 py-2 text-sm font-semibold tracking-wide rounded-full transition-colors duration-300 ${
-                isActive ? "text-white" : "text-purple-200/70 hover:text-white"
+              onClick={onClick}
+              aria-current={isActive ? "true" : undefined}
+              className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                isActive
+                  ? "bg-white/[0.06] text-white"
+                  : "text-zinc-400 hover:bg-white/[0.04] hover:text-white"
               }`}
-              aria-current={isActive ? "page" : undefined}
             >
-              <span
-                className={`relative z-10 ${
-                  !muted
-                    ? "mix-blend-screen drop-shadow-[0_0_6px_rgba(168,85,247,0.6)]"
-                    : ""
-                }`}
-              >
-                {link.name}
-              </span>
-              {/* Underline animation in muted mode */}
-              {muted && (
-                <span
-                  className={`pointer-events-none absolute left-4 right-4 -bottom-1 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-fuchsia-400 via-purple-400 to-indigo-400 transition-[transform] duration-500 ease-out ${
-                    isActive ? "scale-x-100" : "group-hover:scale-x-100"
-                  } will-change-transform`}
-                  style={{
-                    transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-                  }}
-                ></span>
-              )}
-              {isActive && (
-                <AnimatePresence>
-                  <motion.span
-                    key="island"
-                    layoutId="island"
-                    initial={{ scale: 0.6, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 340,
-                      damping: 30,
-                      mass: 0.6,
-                    }}
-                    className={`pointer-events-none absolute inset-0 rounded-full -z-10 ${
-                      !muted
-                        ? "bg-gradient-to-br from-purple-500/40 via-fuchsia-500/30 to-teal-400/30 shadow-lg shadow-purple-900/30"
-                        : "bg-white/5"
-                    }`}
-                  />
-                </AnimatePresence>
-              )}
+              {link.name}
             </a>
           </li>
         );
@@ -156,54 +76,77 @@ export default function Navbar() {
   );
 
   return (
-    <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-50`}>
-      <nav
-        className={`relative flex items-center gap-3 rounded-full px-4 py-2 backdrop-blur-2xl border border-purple-500/25 transition-all duration-500 ${
-          scrolled
-            ? "bg-white/10 shadow-[0_0_18px_-4px_rgba(168,85,247,0.35)]"
-            : "bg-white/5 shadow-[0_0_25px_-6px_rgba(168,85,247,0.45)]"
-        }`}
-        aria-label="Primary"
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+        scrolled
+          ? "border-white/10 bg-surface/85 backdrop-blur-md"
+          : "border-transparent bg-transparent"
+      }`}
+    >
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-accent-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
       >
-        <button
-          onClick={() => setMenuOpen((o) => !o)}
-          className="md:hidden relative z-20 rounded-full p-2 text-purple-200/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-400/50"
+        Skip to content
+      </a>
+      <nav
+        aria-label="Primary"
+        className="container-site flex h-16 items-center justify-between"
+      >
+        <a
+          href="#hero"
+          className="font-mono text-sm font-bold tracking-tight text-white"
+          aria-label="Najibullah Jafari – back to top"
         >
-          <span className="sr-only">Toggle menu</span>
-          <div className="space-y-1.5">
-            <span
-              className={`block h-0.5 w-6 bg-current transition ${
-                menuOpen ? "translate-y-2 rotate-45" : ""
-              }`}
-            ></span>
-            <span
-              className={`block h-0.5 w-6 bg-current transition ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-            ></span>
-            <span
-              className={`block h-0.5 w-6 bg-current transition ${
-                menuOpen ? "-translate-y-2 -rotate-45" : ""
-              }`}
-            ></span>
-          </div>
-        </button>
-        <div className="hidden md:block">
+          najibullah<span className="text-accent-400">.jafari</span>
+        </a>
+        <div className="hidden items-center gap-4 md:flex">
           <NavLinks />
+          <a href="#contact" className="btn-primary !px-4 !py-2 text-xs">
+            Let's talk
+          </a>
         </div>
         <button
-          onClick={() => setMuted((m) => !m)}
-          className="ml-1 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-purple-100 hover:bg-white/20 transition"
-          title="Toggle reduced glow"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          className="rounded-lg p-2 text-zinc-300 hover:text-white md:hidden"
         >
-          {muted ? "Vibrant" : "Muted"}
+          <span className="sr-only">
+            {menuOpen ? "Close menu" : "Open menu"}
+          </span>
+          <svg
+            className="h-6 w-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            {menuOpen ? (
+              <path d="M6 6l12 12M18 6L6 18" />
+            ) : (
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            )}
+          </svg>
         </button>
-        {menuOpen && (
-          <div className="absolute top-full left-1/2 mt-3 w-[280px] -translate-x-1/2 rounded-2xl border border-purple-500/30 bg-[#0b0b12]/90 p-4 shadow-2xl backdrop-blur-xl md:hidden">
-            <NavLinks vertical onClick={() => setMenuOpen(false)} />
-          </div>
-        )}
       </nav>
-    </div>
+      {menuOpen && (
+        <div
+          id="mobile-menu"
+          className="border-t border-white/10 bg-surface/95 px-5 py-4 backdrop-blur-md md:hidden"
+        >
+          <NavLinks vertical onClick={() => setMenuOpen(false)} />
+          <a
+            href="#contact"
+            onClick={() => setMenuOpen(false)}
+            className="btn-primary mt-3 w-full"
+          >
+            Let's talk
+          </a>
+        </div>
+      )}
+    </header>
   );
 }
