@@ -116,6 +116,7 @@ export const resume = {
             description: "Custom web application for azoqa.com. Details, stack, and screenshots are being finalized.",
             tech: ["React", "Laravel"],
             period: "2025",
+            live: "https://azoqa.com",
             images: [azoqa1, azoqa2]
         },
         {
@@ -125,6 +126,7 @@ export const resume = {
             description: "Custom web application for nui.academy. Details, stack, and screenshots are being finalized.",
             tech: ["React", "Laravel"],
             period: "2025",
+            live: "https://nui.academy",
             images: [nui1, nui2]
         },
         {

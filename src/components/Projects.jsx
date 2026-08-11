@@ -264,7 +264,35 @@ function ProjectCard({ project, index, onOpenLightbox }) {
         </div>
         <div className="flex flex-1 flex-col p-6">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <h3 className="text-lg font-semibold text-white">{project.name}</h3>
+            <h3 className="text-lg font-semibold text-white">
+              {project.live ? (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 hover:text-accent-300 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400"
+                >
+                  {project.name}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-3.5 w-3.5 text-zinc-500"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              ) : (
+                project.name
+              )}
+            </h3>
             <p className="font-mono text-xs text-zinc-500">{project.period}</p>
           </div>
           {project.role && (
