@@ -7,6 +7,11 @@ import attendanceDeviceImg from "../assets/projects/awec/attendance_device.PNG";
 import attendanceImg from "../assets/projects/awec/attendance.PNG";
 import logImg from "../assets/projects/awec/log.PNG";
 import messengerImg from "../assets/projects/awec/messenger.PNG";
+import azoqa1 from "../assets/projects/azoqa/32f443.PNG";
+import azoqa2 from "../assets/projects/azoqa/azfasd.PNG";
+import nui1 from "../assets/projects/nui/3f434.PNG";
+import nui2 from "../assets/projects/nui/f43f34f.PNG";
+import zeroo1 from "../assets/projects/zeroo/23ff23f.PNG";
 
 export const resume = {
     name: "Najibullah Jafari",
@@ -89,7 +94,7 @@ export const resume = {
         {
             company: "Kabul Innovation Center",
             role: "Full-stack Engineer",
-            period: "02/2025-04/2025",
+            period: "02/2025-Present",
             description: "Full-stack engineer on HMS and MIS web applications: building modules with Laravel and Livewire, automating workflows, and handling deployment via cPanel.",
             tech: ["Laravel", "Livewire", "Tailwind CSS", "cPanel"],
             location: "On-site"
@@ -111,7 +116,7 @@ export const resume = {
             description: "Custom web application for azoqa.com. Details, stack, and screenshots are being finalized.",
             tech: ["React", "Laravel"],
             period: "2025",
-            images: []
+            images: [azoqa1, azoqa2]
         },
         {
             name: "NUI Academy",
@@ -120,7 +125,7 @@ export const resume = {
             description: "Custom web application for nui.academy. Details, stack, and screenshots are being finalized.",
             tech: ["React", "Laravel"],
             period: "2025",
-            images: []
+            images: [nui1, nui2]
         },
         {
             name: "ZEROO POS",
@@ -129,7 +134,7 @@ export const resume = {
             description: "Custom point-of-sale system for ZEROO. Details, stack, and screenshots are being finalized.",
             tech: ["React", "Laravel"],
             period: "2025",
-            images: []
+            images: [zeroo1]
         },
         {
             name: "Afghanistan Women Educational Center ERP",
