@@ -211,6 +211,21 @@ export const resume = {
             description: "Cryptocurrency price tracker consuming a live market API.",
             url: "https://tiny-sfogliatella-1f3791.netlify.app/"
         },
+        {
+            name: "HDSOC",
+            description: "Organization website for HDSOC Afghanistan.",
+            url: "https://hdsoc.af"
+        },
+        {
+            name: "ACIM",
+            description: "Organization website for ACIM Afghanistan.",
+            url: "https://acim.af"
+        },
+        {
+            name: "Tax House",
+            description: "Website for Tax House Afghanistan.",
+            url: "https://taxhouse.af"
+        },
     ],
     mentoring: {
         organization: "Microverse",
