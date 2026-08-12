@@ -112,8 +112,8 @@ export const resume = {
         {
             name: "Azoqa",
             role: "Full-stack Developer",
-            problem: "Placeholder — detailed case study will be added when screenshots are ready.",
-            description: "Custom web application for azoqa.com. Details, stack, and screenshots are being finalized.",
+            problem: "The business needed a dedicated online storefront to list products, manage orders, and handle customer purchases without depending on third-party marketplaces.",
+            description: "Built a custom e-commerce platform with product catalog, shopping cart, checkout, and order management tailored to azoqa.com.",
             tech: ["React", "Laravel"],
             period: "2025",
             live: "https://azoqa.com",
@@ -122,8 +122,8 @@ export const resume = {
         {
             name: "NUI Academy",
             role: "Full-stack Developer",
-            problem: "Placeholder — detailed case study will be added when screenshots are ready.",
-            description: "Custom web application for nui.academy. Details, stack, and screenshots are being finalized.",
+            problem: "The academy needed a centralized platform to deliver courses, track student progress, and manage enrollments and assessments online.",
+            description: "Built a learning management system with course content, student dashboards, enrollment tracking, and progress reporting for nui.academy.",
             tech: ["React", "Laravel"],
             period: "2025",
             live: "https://nui.academy",
@@ -132,8 +132,8 @@ export const resume = {
         {
             name: "ZEROO POS",
             role: "Full-stack Developer",
-            problem: "Placeholder — detailed case study will be added when screenshots are ready.",
-            description: "Custom point-of-sale system for ZEROO. Details, stack, and screenshots are being finalized.",
+            problem: "Small retailers tracked sales and inventory through manual notes or fragmented tools, leading to errors, stock mismatches, and slow checkout.",
+            description: "Built a point-of-sale system with product scanning, sales tracking, receipt management, and inventory control for ZEROO.",
             tech: ["React", "Laravel"],
             period: "2025",
             images: [zeroo1]
