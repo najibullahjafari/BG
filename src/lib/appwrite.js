@@ -14,7 +14,7 @@ export const COLLECTIONS = {
 const config = {
   endpoint: import.meta.env.VITE_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1",
   projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID || "",
-  databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID || "6ab229480001ac6a2157",
+  databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID || "portfolio",
 };
 
 export const isAppwriteConfigured = Boolean(config.projectId);
