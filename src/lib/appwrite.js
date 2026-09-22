@@ -13,7 +13,7 @@ export const COLLECTIONS = {
 
 const config = {
   endpoint: import.meta.env.VITE_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1",
-  projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID || "",
+  projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID || "6ab0ecb60002721f95d8",
   databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID || "portfolio",
 };
 
