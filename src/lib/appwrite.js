@@ -2,8 +2,8 @@ import { Account, Client, TablesDB, ID, Query } from "appwrite";
 import { resume } from "../data/resume";
 
 export const COLLECTIONS = {
-  profile: import.meta.env.VITE_APPWRITE_PROFILE_COLLECTION_ID || "profile",
-  projects: import.meta.env.VITE_APPWRITE_PROJECTS_COLLECTION_ID || "projects",
+  profile: import.meta.env.VITE_APPWRITE_PROFILE_COLLECTION_ID || "6ab22fbe00183ffe126e",
+  projects: import.meta.env.VITE_APPWRITE_PROJECTS_COLLECTION_ID || "6ab230a0001c0c830355",
   skills: import.meta.env.VITE_APPWRITE_SKILLS_COLLECTION_ID || "skills",
   experience: import.meta.env.VITE_APPWRITE_EXPERIENCE_COLLECTION_ID || "experience",
   websites: import.meta.env.VITE_APPWRITE_WEBSITES_COLLECTION_ID || "websites",
