@@ -2,8 +2,8 @@ import { Account, Client, TablesDB, ID, Query } from "appwrite";
 import { resume } from "../data/resume";
 
 export const COLLECTIONS = {
-  profile: import.meta.env.VITE_APPWRITE_PROFILE_COLLECTION_ID || "6ab22fbe00183ffe126e",
-  projects: import.meta.env.VITE_APPWRITE_PROJECTS_COLLECTION_ID || "6ab230a0001c0c830355",
+  profile: import.meta.env.VITE_APPWRITE_PROFILE_COLLECTION_ID || "profile",
+  projects: import.meta.env.VITE_APPWRITE_PROJECTS_COLLECTION_ID || "projects",
   skills: import.meta.env.VITE_APPWRITE_SKILLS_COLLECTION_ID || "skills",
   experience: import.meta.env.VITE_APPWRITE_EXPERIENCE_COLLECTION_ID || "experience",
   websites: import.meta.env.VITE_APPWRITE_WEBSITES_COLLECTION_ID || "websites",
@@ -46,7 +46,7 @@ const mapRemoteResume = (documents) => {
     ...resume,
     ...(profile || {}),
     projects: documents.projects.length ? documents.projects : resume.projects,
-    skills: documents.skills.length ? documents.skills : resume.skills,
+    skills: documents.skills.length ? documents.skills.map((item) => ({ ...item, id: item.skillsid || item.id })) : resume.skills,
     experience: documents.experience.length ? documents.experience : resume.experience,
     websites: documents.websites.length ? documents.websites : resume.websites,
     education: documents.education.length ? documents.education : resume.education,
@@ -146,7 +146,7 @@ export async function deleteAdminDocument(key, documentId) {
 
 const seedRows = {
   projects: () => resume.projects.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
-  skills: () => resume.skills.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
+  skills: () => resume.skills.map((item, sortOrder) => ({ skillsid: item.id, label: item.label, blurb: item.blurb, items: item.items, sortOrder, published: true })),
   experience: () => resume.experience.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
   websites: () => resume.websites.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
   education: () => resume.education.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
