@@ -4,6 +4,7 @@ import { resume } from "../data/resume";
 import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 import SocialLinks from "./SocialLinks";
+import { submitMessage } from "../lib/appwrite";
 
 export default function Contact() {
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
@@ -14,19 +15,18 @@ export default function Contact() {
     setStatus("submitting");
     const formData = new FormData(e.target);
     try {
-      // Simple email sending via Formspree (user can replace with backend)
-      const resp = await fetch("https://formspree.io/f/mbjeelpk", {
-        // placeholder form id
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-      if (resp.ok) {
+      const payload = Object.fromEntries(formData.entries());
+      const stored = await submitMessage(payload);
+      if (stored.stored) {
         setStatus("success");
         setMessage("Message sent successfully!");
         e.target.reset();
       } else {
-        throw new Error("Failed");
+        const resp = await fetch("https://formspree.io/f/mbjeelpk", {
+          method: "POST", headers: { Accept: "application/json" }, body: formData,
+        });
+        if (!resp.ok) throw new Error("Failed");
+        setStatus("success"); setMessage("Message sent successfully!"); e.target.reset();
       }
     } catch {
       setStatus("error");
