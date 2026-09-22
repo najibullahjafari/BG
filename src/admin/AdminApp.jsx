@@ -32,7 +32,7 @@ const SECTIONS = {
   skills: {
     label: "Skills",
     fields: [
-      ["id", "Key", "text"], ["label", "Label", "text"], ["blurb", "Description", "textarea"],
+      ["skillsid", "Key", "text"], ["label", "Label", "text"], ["blurb", "Description", "textarea"],
       ["items", "Skills (comma separated)", "array"], ["sortOrder", "Order", "number"], ["published", "Published", "boolean"],
     ],
   },
