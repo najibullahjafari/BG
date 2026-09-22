@@ -1,4 +1,4 @@
-import { Account, Client, Databases, ID, Query } from "appwrite";
+import { Account, Client, TablesDB, ID, Query } from "appwrite";
 import { resume } from "../data/resume";
 
 export const COLLECTIONS = {
@@ -13,7 +13,7 @@ export const COLLECTIONS = {
 
 const config = {
   endpoint: import.meta.env.VITE_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1",
-  projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID || "6ab0ecb60002721f95d8",
+  projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID || "",
   databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID || "portfolio",
 };
 
@@ -21,7 +21,7 @@ export const isAppwriteConfigured = Boolean(config.projectId);
 
 const client = new Client().setEndpoint(config.endpoint).setProject(config.projectId);
 export const account = new Account(client);
-export const databases = new Databases(client);
+export const tablesDB = new TablesDB(client);
 
 const collectionId = (key) => COLLECTIONS[key];
 
@@ -30,12 +30,12 @@ const sortDocuments = (documents) =>
 
 const list = async (key, queries = [Query.equal("published", true)]) => {
   if (!isAppwriteConfigured) return [];
-  const response = await databases.listDocuments({
+  const response = await tablesDB.listRows({
     databaseId: config.databaseId,
-    collectionId: collectionId(key),
+    tableId: collectionId(key),
     queries,
   });
-  return sortDocuments(response.documents || []);
+  return sortDocuments(response.rows || []);
 };
 
 const asArray = (value) => (Array.isArray(value) ? value : value ? [value] : []);
@@ -71,10 +71,10 @@ export async function loadPortfolio() {
 
 export async function submitMessage({ name, email, message }) {
   if (!isAppwriteConfigured) return { stored: false };
-  await databases.createDocument({
+  await tablesDB.createRow({
     databaseId: config.databaseId,
-    collectionId: collectionId("messages"),
-    documentId: ID.unique(),
+    tableId: collectionId("messages"),
+    rowId: ID.unique(),
     data: {
       name,
       email,
@@ -104,12 +104,12 @@ export async function signOutAdmin() {
 
 export async function listAdminDocuments(key) {
   if (!isAppwriteConfigured) throw new Error("Configure Appwrite first.");
-  const response = await databases.listDocuments({
+  const response = await tablesDB.listRows({
     databaseId: config.databaseId,
-    collectionId: collectionId(key),
+    tableId: collectionId(key),
     queries: [Query.orderAsc("sortOrder"), Query.limit(100)],
   });
-  return response.documents || [];
+  return response.rows || [];
 }
 
 export async function saveAdminDocument(key, data, documentId) {
@@ -120,27 +120,27 @@ export async function saveAdminDocument(key, data, documentId) {
     sortOrder: Number(data.sortOrder || 0),
   };
   if (documentId) {
-    return databases.updateDocument({
+    return tablesDB.updateRow({
       databaseId: config.databaseId,
-      collectionId: collectionId(key),
-      documentId,
+      tableId: collectionId(key),
+      rowId: documentId,
       data: payload,
     });
   }
-  return databases.createDocument({
+  return tablesDB.createRow({
     databaseId: config.databaseId,
-    collectionId: collectionId(key),
-    documentId: ID.unique(),
+    tableId: collectionId(key),
+    rowId: ID.unique(),
     data: payload,
   });
 }
 
 export async function deleteAdminDocument(key, documentId) {
   if (!isAppwriteConfigured) throw new Error("Configure Appwrite first.");
-  return databases.deleteDocument({
+  return tablesDB.deleteRow({
     databaseId: config.databaseId,
-    collectionId: collectionId(key),
-    documentId,
+    tableId: collectionId(key),
+    rowId: documentId,
   });
 }
 
