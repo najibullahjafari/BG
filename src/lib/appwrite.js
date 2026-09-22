@@ -46,7 +46,7 @@ const mapRemoteResume = (documents) => {
     ...resume,
     ...(profile || {}),
     projects: documents.projects.length ? documents.projects : resume.projects,
-    skills: documents.skills.length ? documents.skills.map((item) => ({ ...item, id: item.skillsid || item.id })) : resume.skills,
+    skills: documents.skills.length ? documents.skills.map((item) => ({ ...item, id: item.$id || item.id })) : resume.skills,
     experience: documents.experience.length ? documents.experience : resume.experience,
     websites: documents.websites.length ? documents.websites : resume.websites,
     education: documents.education.length ? documents.education : resume.education,
@@ -146,7 +146,7 @@ export async function deleteAdminDocument(key, documentId) {
 
 const seedRows = {
   projects: () => resume.projects.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
-  skills: () => resume.skills.map((item, sortOrder) => ({ skillsid: item.id, label: item.label, blurb: item.blurb, items: item.items, sortOrder, published: true })),
+  skills: () => resume.skills.map((item, sortOrder) => ({ label: item.label, blurb: item.blurb, items: item.items, sortOrder, published: true })),
   experience: () => resume.experience.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
   websites: () => resume.websites.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
   education: () => resume.education.map((item, sortOrder) => ({ ...item, sortOrder, published: true })),
