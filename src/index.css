@@ -2,14 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg: #0b100f;
+  --surface: #121a17;
+  --surface-raised: #172119;
+  --text: #f5f7f4;
+  --text-muted: #a1a1aa;
+  --line: rgba(255, 255, 255, 0.1);
+  --accent: #c8f34a;
+  --radius-card: 14px;
+  --shadow-card: 0 18px 60px rgba(0, 0, 0, 0.18);
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
 body {
-  background: #0b100f;
-  color: #e8f0e9;
+  background: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   background-image:
@@ -27,8 +39,8 @@ body {
 }
 
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #0b100f; }
-::-webkit-scrollbar-thumb { background: #33452b; border: 2px solid #0b100f; border-radius: 999px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #33452b; border: 2px solid var(--bg); border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: #a8d93f; }
 
 :focus-visible {
@@ -51,7 +63,7 @@ body {
 
   .card {
     @apply rounded-2xl border border-white/[0.09] bg-[#121a17]/80 transition-all duration-300;
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255,255,255,0.035);
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.035);
     backdrop-filter: blur(14px);
   }
 

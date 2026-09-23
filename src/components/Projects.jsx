@@ -1,12 +1,14 @@
 // src/components/Projects.jsx
-import { resume } from "../data/resume";
+import { usePortfolio } from "../lib/usePortfolio";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 
 export default function Projects() {
+  const { portfolio } = usePortfolio();
   const [lightbox, setLightbox] = useState(null); // { project, projectIndex, imageIndex }
+  const triggerRef = useRef(null);
 
   // Prevent body scroll when lightbox open
   useEffect(() => {
@@ -17,23 +19,38 @@ export default function Projects() {
     }
   }, [lightbox]);
 
-  // Keyboard handlers (ESC, arrows)
+  // Keyboard handlers and focus trap
   useEffect(() => {
     if (!lightbox) return;
     const handler = (e) => {
-      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowRight") nextImage();
       if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "Tab") {
+        const dialog = document.querySelector("[role=dialog]");
+        const focusable = dialog?.querySelectorAll("button");
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     };
     window.addEventListener("keydown", handler);
+    const firstButton = document.querySelector("[role=dialog] button");
+    firstButton?.focus();
     return () => window.removeEventListener("keydown", handler);
   }, [lightbox]);
 
   const openLightbox = (project, projectIndex, imageIndex) => {
+    triggerRef.current = document.activeElement;
     setLightbox({ project, projectIndex, imageIndex });
   };
 
-  const closeLightbox = () => setLightbox(null);
+  const closeLightbox = () => {
+    setLightbox(null);
+    requestAnimationFrame(() => triggerRef.current?.focus?.());
+  };
 
   const nextImage = () => {
     setLightbox((lb) => {
@@ -64,7 +81,7 @@ export default function Projects() {
           />
         </Reveal>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {resume.projects.map((project, idx) => (
+          {portfolio.projects.map((project, idx) => (
             <ProjectCard
               key={project.name}
               project={project}
@@ -87,7 +104,7 @@ export default function Projects() {
             className="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
             aria-modal="true"
             role="dialog"
-            aria-label={`Screenshot of ${lightbox.project.name}`}
+            aria-label={`Screenshot gallery for ${lightbox.project.name}`}
             onClick={(e) => {
               if (e.target === e.currentTarget) closeLightbox();
             }}
@@ -226,6 +243,7 @@ function ProjectCard({ project, index, onOpenLightbox }) {
                   draggable={false}
                 />
               </AnimatePresence>
+              <span className="pointer-events-none absolute bottom-3 right-3 rounded-full border border-white/20 bg-black/60 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">View gallery ↗</span>
             </button>
           ) : (
             <div className="flex aspect-[16/10] w-full items-center justify-center bg-white/[0.04]">
