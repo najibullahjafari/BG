@@ -1,39 +1,53 @@
 // src/components/Contact.jsx
 import { useState } from "react";
-import { resume } from "../data/resume";
+import { usePortfolio } from "../lib/usePortfolio";
 import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 import SocialLinks from "./SocialLinks";
 import { submitMessage } from "../lib/appwrite";
 
 export default function Contact() {
+  const { portfolio } = usePortfolio();
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("submitting");
-    const formData = new FormData(e.target);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+    let delivered = false;
+
     try {
-      const payload = Object.fromEntries(formData.entries());
       const stored = await submitMessage(payload);
-      if (stored.stored) {
-        setStatus("success");
-        setMessage("Message sent successfully!");
-        e.target.reset();
-      } else {
-        const resp = await fetch("https://formspree.io/f/mbjeelpk", {
-          method: "POST", headers: { Accept: "application/json" }, body: formData,
-        });
-        if (!resp.ok) throw new Error("Failed");
-        setStatus("success"); setMessage("Message sent successfully!"); e.target.reset();
-      }
+      delivered = Boolean(stored?.stored);
     } catch {
-      setStatus("error");
-      setMessage("Failed to send. Please email me directly.");
-    } finally {
-      setTimeout(() => setStatus("idle"), 5000);
+      delivered = false;
     }
+
+    if (!delivered) {
+      try {
+        const response = await fetch("https://formspree.io/f/mbjeelpk", {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: formData,
+        });
+        delivered = response.ok;
+      } catch {
+        delivered = false;
+      }
+    }
+
+    if (delivered) {
+      setStatus("success");
+      setMessage("Message sent successfully!");
+      form.reset();
+    } else {
+      setStatus("error");
+      setMessage("Could not send automatically. Please email me directly.");
+    }
+    window.setTimeout(() => setStatus("idle"), 5000);
   };
 
   return (
@@ -54,10 +68,10 @@ export default function Contact() {
                   Email
                 </h3>
                 <a
-                  href={`mailto:${resume.email}`}
+                  href={`mailto:${portfolio.email}`}
                   className="link-accent mt-2 inline-block text-base font-medium"
                 >
-                  {resume.email}
+                  {portfolio.email}
                 </a>
               </div>
               <div>

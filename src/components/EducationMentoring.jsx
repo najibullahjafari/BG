@@ -1,11 +1,12 @@
 // src/components/EducationMentoring.jsx
-import { resume } from "../data/resume";
+import { usePortfolio } from "../lib/usePortfolio";
 import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 
 export default function EducationMentoring() {
-  const education = resume.education || [];
-  const mentoring = resume.mentoring;
+  const { portfolio } = usePortfolio();
+  const education = portfolio.education || [];
+  const mentoring = portfolio.mentoring;
   return (
     <section className="py-24" aria-label="Education and mentoring">
       <div className="container-site">

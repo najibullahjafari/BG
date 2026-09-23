@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Skills from "./components/Skills";
@@ -8,16 +7,27 @@ import Websites from "./components/Websites";
 import EducationMentoring from "./components/EducationMentoring";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import { loadPortfolio } from "./lib/appwrite";
+import { PortfolioProvider } from "./lib/PortfolioContext";
 import "./index.css";
 
 function App() {
-  const [, setLoaded] = useState(false);
-  useEffect(() => { loadPortfolio().finally(() => setLoaded(true)); }, []);
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden bg-surface font-display text-zinc-200">
-      <Navbar /><main id="main"><div id="hero"><Hero /></div><div id="projects"><Projects /></div><div id="skills"><Skills /></div><div id="experience"><Experience /></div><div id="websites"><Websites /></div><div id="education"><EducationMentoring /></div><div id="contact"><Contact /></div></main><Footer />
-    </div>
+    <PortfolioProvider>
+      <div className="relative min-h-screen w-full overflow-x-hidden bg-surface font-display text-zinc-200">
+        <Navbar />
+        <main id="main">
+          <div id="hero"><Hero /></div>
+          <div id="projects"><Projects /></div>
+          <div id="skills"><Skills /></div>
+          <div id="experience"><Experience /></div>
+          <div id="websites"><Websites /></div>
+          <div id="education"><EducationMentoring /></div>
+          <div id="contact"><Contact /></div>
+        </main>
+        <Footer />
+      </div>
+    </PortfolioProvider>
   );
 }
+
 export default App;

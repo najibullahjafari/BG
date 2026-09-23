@@ -1,10 +1,11 @@
 // src/components/Websites.jsx
-import { resume } from "../data/resume";
+import { usePortfolio } from "../lib/usePortfolio";
 import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 
 export default function Websites() {
-  const sites = resume.websites || [];
+  const { portfolio } = usePortfolio();
+  const sites = portfolio.websites || [];
   if (!sites.length) return null;
   return (
     <section className="py-24" aria-label="Live websites">
@@ -44,7 +45,7 @@ export default function Websites() {
         <p className="mt-8 text-sm text-zinc-500">
           More projects on{" "}
           <a
-            href={resume.github}
+            href={portfolio.github}
             target="_blank"
             rel="noopener noreferrer"
             className="link-accent"
