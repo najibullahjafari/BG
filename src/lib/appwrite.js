@@ -107,7 +107,7 @@ export async function listAdminDocuments(key) {
   const response = await tablesDB.listRows({
     databaseId: config.databaseId,
     tableId: collectionId(key),
-    queries: [Query.orderAsc("sortOrder"), Query.limit(100)],
+    queries: key === "messages" ? [Query.orderDesc("$createdAt"), Query.limit(100)] : [Query.orderAsc("sortOrder"), Query.limit(100)],
   });
   return response.rows || [];
 }
