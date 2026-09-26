@@ -1,9 +1,10 @@
 // src/components/Skills.jsx
-import { resume } from "../data/resume";
+import { usePortfolio } from "../lib/usePortfolio";
 import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 
 export default function Skills() {
+  const { portfolio } = usePortfolio();
   return (
     <section className="py-24" aria-label="Technical skills">
       <div className="container-site">
@@ -15,7 +16,7 @@ export default function Skills() {
           />
         </Reveal>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {resume.skills.map((group, i) => (
+          {portfolio.skills.map((group, i) => (
             <Reveal key={group.id} delay={i * 0.05}>
               <div className="card card-hover h-full p-6">
                 <h3 className="text-base font-semibold text-white">
@@ -43,7 +44,7 @@ export default function Skills() {
                 Algorithmic problem solving, verified in competition.
               </p>
               <ul className="mt-4 space-y-2">
-                {resume.achievements.map((a) => (
+                {portfolio.achievements.map((a) => (
                   <li
                     key={a}
                     className="flex items-start gap-2 text-sm text-zinc-300"

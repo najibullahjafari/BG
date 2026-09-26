@@ -13,15 +13,15 @@ export default {
             },
             colors: {
                 surface: {
-                    DEFAULT: '#0a0a0f',
-                    raised: '#111118',
+                    DEFAULT: '#0b100f',
+                    raised: '#121a17',
                 },
                 accent: {
-                    200: '#ddd6fe',
-                    300: '#c4b5fd',
-                    400: '#a78bfa',
-                    500: '#8b5cf6',
-                    600: '#7c3aed',
+                    200: '#efffb4',
+                    300: '#ddff78',
+                    400: '#c8f34a',
+                    500: '#a8d93f',
+                    600: '#7ea52d',
                 },
             },
             maxWidth: {

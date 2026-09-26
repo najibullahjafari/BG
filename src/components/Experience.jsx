@@ -1,11 +1,12 @@
 // src/components/Experience.jsx
-import { resume } from "../data/resume";
+import { usePortfolio } from "../lib/usePortfolio";
 import SectionHeader from "./SectionHeader";
 import Reveal from "./Reveal";
 
 export default function Experience() {
+  const { portfolio } = usePortfolio();
   // Most recent first
-  const jobs = [...resume.experience].reverse();
+  const jobs = [...portfolio.experience].reverse();
   return (
     <section className="py-24" aria-label="Work experience">
       <div className="container-site">

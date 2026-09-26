@@ -1,21 +1,22 @@
 // src/components/SocialLinks.jsx
-import { resume } from "../data/resume";
+import { usePortfolio } from "../lib/usePortfolio";
 
-function socialProfiles() {
+function socialProfiles(portfolio) {
   return [
-    { label: "GitHub", href: resume.github },
-    { label: "LinkedIn", href: resume.linkedin },
-    { label: "Twitter", href: resume.twitter },
-    { label: "StackOverflow", href: resume.stackOverflow },
-    { label: "LeetCode", href: resume.LeetCode },
-    { label: "CodeForces", href: resume.CodeForces },
+    { label: "GitHub", href: portfolio.github },
+    { label: "LinkedIn", href: portfolio.linkedin },
+    { label: "Twitter", href: portfolio.twitter },
+    { label: "StackOverflow", href: portfolio.stackOverflow },
+    { label: "LeetCode", href: portfolio.LeetCode },
+    { label: "CodeForces", href: portfolio.CodeForces },
   ].filter((s) => !!s.href);
 }
 
 export default function SocialLinks({ compact = false }) {
+  const { portfolio } = usePortfolio();
   return (
     <ul className="flex flex-wrap items-center gap-2">
-      {socialProfiles().map((s) => (
+      {socialProfiles(portfolio).map((s) => (
         <li key={s.label}>
           <a
             href={s.href}
